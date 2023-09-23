@@ -49,5 +49,33 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/local_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:text="Local"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/visitor_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:text="Visitante"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            android:textStyle="bold"/>
+        
     </RelativeLayout>
 </layout>
