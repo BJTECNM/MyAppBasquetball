@@ -7,8 +7,8 @@ import com.example.myappbasquetball.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
-    private var countLocal = 0
-    private var countVisitor = 0
+    //private var countLocal = 0
+    //private var countVisitor = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-
+        /*
         binding.localMinusButton.setOnClickListener {
             countLocal--
             if (countLocal<0){
@@ -72,5 +72,6 @@ class MainActivity : AppCompatActivity() {
             else
                 Toast.makeText(this, "Gana el equipo Local", Toast.LENGTH_LONG).show()
         }
+         */
     }
 }
