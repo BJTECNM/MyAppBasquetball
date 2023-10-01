@@ -27,8 +27,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun decreaseVisitorScore() {
-        if (localScore > 0) {
-            localScore--
+        if (visitorScore > 0) {
+            visitorScore--
         }
     }
 
