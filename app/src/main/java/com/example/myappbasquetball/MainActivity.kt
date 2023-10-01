@@ -1,77 +1,75 @@
 package com.example.myappbasquetball
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.myappbasquetball.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
-    //private var countLocal = 0
-    //private var countVisitor = 0
+
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         setupButtons()
     }
 
     private fun setupButtons() {
-        /*
-        binding.localMinusButton.setOnClickListener {
-            countLocal--
-            if (countLocal<0){
-                countLocal=0
-                Toast.makeText(this, "Ya es Cero", Toast.LENGTH_LONG).show()
-            }
-            else
-                binding.localScoreText.text= countLocal.toString()
-        }
 
+        binding.localMinusButton.setOnClickListener { viewModel.decreaseLocalScore()
+            binding.localScoreText.text = viewModel.localScore.toString()
+
+        }
         binding.localPlusButton.setOnClickListener {
-            countLocal++
-            binding.localScoreText.text= countLocal.toString()
+            addPointsToScore(1, islocal = true)
         }
-
         binding.localTwoPointsButton.setOnClickListener {
-            countLocal += 2
-            binding.localScoreText.text= countLocal.toString()
+            addPointsToScore(2, islocal = true)
         }
-
         binding.visitorMinusButton.setOnClickListener {
-            countVisitor--
-            if (countVisitor<0){
-                countVisitor = 0
-                Toast.makeText(this, "Ya es Cero", Toast.LENGTH_LONG).show()
-            }
-            else
-                binding.visitorScoreText.text= countVisitor.toString()
+            viewModel.decreaseVisitorScore()
+            binding.visitorScoreText.text = viewModel.visitorScore.toString()
         }
-
         binding.visitorPlusButton.setOnClickListener {
-            countVisitor++
-            binding.visitorScoreText.text= countVisitor.toString()
+            addPointsToScore(1, islocal = false)
         }
-
         binding.visitorTwoPointsButton.setOnClickListener {
-            countVisitor+=2
-            binding.visitorScoreText.text= countVisitor.toString()
+            addPointsToScore(2, islocal = false)
         }
-
         binding.restartButton.setOnClickListener {
-            countVisitor = 0
-            countLocal = 0
+            resetScores()
         }
-
         binding.resultsButton.setOnClickListener {
-            if (countVisitor == countLocal)
-                Toast.makeText(this, "Fue un empate", Toast.LENGTH_LONG).show()
-            else if (countVisitor > countLocal)
-                Toast.makeText(this, "Gana el equipo Visitante", Toast.LENGTH_LONG).show()
-            else
-                Toast.makeText(this, "Gana el equipo Local", Toast.LENGTH_LONG).show()
+            startScoreActivity()
         }
-         */
+    }
+
+    private fun resetScores(){
+        viewModel.resetScores()
+        binding.visitorScoreText.text = viewModel.localScore.toString()
+        binding.localScoreText.text = viewModel.visitorScore.toString()
+    }
+
+    private fun addPointsToScore(points: Int, islocal: Boolean) {
+        viewModel.addPointsToScore(points,islocal)
+        if (islocal){
+            binding.localScoreText.text = viewModel.localScore.toString()
+        }else{
+            binding.visitorScoreText.text = viewModel.visitorScore.toString()
+        }
+    }
+
+    private fun startScoreActivity(){
+        val intent = Intent(this, ScoreActivity::class.java)
+        intent.putExtra(ScoreActivity.LOCAL_SCORE_KEY, viewModel.localScore)
+        intent.putExtra(ScoreActivity.VISITOR_SCORE_KEY, viewModel.visitorScore)
+        startActivity(intent)
     }
 }
